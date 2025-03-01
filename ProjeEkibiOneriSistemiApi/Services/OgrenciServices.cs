@@ -36,6 +36,7 @@ namespace ProjeEkibiOneriSistemiApi.Services
                 guncellenecekOgrenci.Bolum = ogrenci.Bolum;
                 guncellenecekOgrenci.Email = ogrenci.Email;
                 guncellenecekOgrenci.Telefon = ogrenci.Telefon;
+                guncellenecekOgrenci.ogrenciNo = ogrenci.ogrenciNo;
 
                 await _context.SaveChangesAsync();
             }

@@ -8,5 +8,6 @@ namespace ProjeEkibiOneriSistemiApi.Services
 
         Task ekleKategori(Kategori kategori);
         Task removeKategori (int id);
+
     }
 }
