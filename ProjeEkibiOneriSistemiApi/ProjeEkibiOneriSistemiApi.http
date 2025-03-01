@@ -1,0 +1,6 @@
+@ProjeEkibiOneriSistemiApi_HostAddress = http://localhost:5188
+
+GET {{ProjeEkibiOneriSistemiApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
