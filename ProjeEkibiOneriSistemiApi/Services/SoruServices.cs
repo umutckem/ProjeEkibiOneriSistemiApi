@@ -33,6 +33,7 @@ namespace ProjeEkibiOneriSistemiApi.Services
                 guncellenecekSoru.Metin = soru.Metin ;
                 guncellenecekSoru.OnemDerecesi = soru.OnemDerecesi ;
                 guncellenecekSoru.KategoriId = soru.KategoriId ;
+                guncellenecekSoru.Cevap = soru.Cevap ;
                 guncellenecekSoru.Id = soru.Id ;
                 
                 await _ogrenciAnalizDbContext.SaveChangesAsync() ;

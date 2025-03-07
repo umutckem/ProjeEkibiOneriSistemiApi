@@ -23,6 +23,8 @@ namespace ProjeEkibiOneriSistemiApi
             builder.Services.AddScoped<IKategoriServices, KategoriServices>();
             builder.Services.AddScoped<ISoruServices, SoruServices>();
             builder.Services.AddScoped<IKullaniciYanitiServices, KullaniciYanitiServices>();
+            builder.Services.AddScoped<IProjeServices, ProjeServices>();
+            builder.Services.AddScoped<IOgrenciProjeServices, OgrenciProjeServices>();
 
             // Add services to the container.
             builder.Services.AddAuthorization();
@@ -174,7 +176,84 @@ namespace ProjeEkibiOneriSistemiApi
                 return Results.Ok($"ID {id} olan Yanýt silindi.");
             });
 
+            //Proje App'leri
 
+            app.MapGet("/Projeler", async (IProjeServices projeServices) =>
+            {
+                var Projeler = await projeServices.GetProjeler();
+                return Results.Ok(Projeler);
+            });
+
+            app.MapPost("/Projeler", async (IProjeServices projeServices, Proje proje) =>
+            {
+                await projeServices.projeEkle(proje);
+                return Results.Created($"/Kategori/{proje.Id}", proje);
+            });
+
+            app.MapPut("/Proje/{id}", async (IProjeServices projeServices, Guid id, Proje proje) =>
+            {
+                var existingProje = await projeServices.GetProjeler();
+                if (!existingProje.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan proje bulunamadý.");
+                }
+
+                proje.Id = id; // ID'nin deðiþmemesini saðla
+                await projeServices.projeGuncelle(proje);
+                return Results.Ok(proje);
+            });
+
+            app.MapDelete("/Projeler/{id}", async (IProjeServices projeServices, Guid id) =>
+            {
+                var existingProje = await projeServices.GetProjeler();
+                if (!existingProje.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan Proje bulunamadý.");
+                }
+
+                await projeServices.projeSil(id);
+                return Results.Ok($"ID {id} olan proje silindi.");
+            });
+
+            //OgrenciProje App'leri
+
+
+            app.MapGet("/OgrenciProjeler", async (IOgrenciProjeServices ogrenciProjeServices) =>
+            {
+                var ogrenciProjeler = await ogrenciProjeServices.GetOgrenciProjeler();
+                return Results.Ok(ogrenciProjeler);
+            });
+
+            app.MapPost("/OgrenciProjeler", async (IOgrenciProjeServices ogrenciProjeServices, OgrenciProje ogrenciProje) =>
+            {
+                await ogrenciProjeServices.ekleOgrenciProje(ogrenciProje);
+                return Results.Created($"/Kategori/{ogrenciProje.Id}", ogrenciProje);
+            });
+
+            app.MapPut("/OgrenciProjeler/{id}", async (IOgrenciProjeServices ogrenciProjeServices, int id, OgrenciProje ogrenciProje) =>
+            {
+                var existingOgrenciProje = await ogrenciProjeServices.GetOgrenciProjeler();
+                if (!existingOgrenciProje.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan ogrenci projesi bulunamadý.");
+                }
+
+                ogrenciProje.Id = id; // ID'nin deðiþmemesini saðla
+                await ogrenciProjeServices.guncelleOgrenciProje(ogrenciProje);
+                return Results.Ok(ogrenciProje);
+            });
+
+            app.MapDelete("/OgrenciProjeler/{id}", async (IOgrenciProjeServices ogrenciProjeServices, int id) =>
+            {
+                var existingOgrenciProje = await ogrenciProjeServices.GetOgrenciProjeler();
+                if (!existingOgrenciProje.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan ogrenci Projesi bulunamadý.");
+                }
+
+                await ogrenciProjeServices.silOgrenciProje(id);
+                return Results.Ok($"ID {id} olan ogrenci projesi silindi.");
+            });
             app.Run();
         }
     }

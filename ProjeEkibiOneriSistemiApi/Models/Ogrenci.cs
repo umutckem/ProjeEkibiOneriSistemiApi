@@ -9,7 +9,11 @@
         public string Telefon { get; set; } 
         public string Bolum { get; set; } 
         public int Sinif { get; set; }
-        public string ogrenciNo { get; set; }
+        public string OgrenciNo { get; set; }
+        public string TC { get; set; }
+        public string OgrenciResmi { get; set; }
+        public int ToplamCevaplananSoruSayisi { get; set; }
+        public float OrtalamaPuan { get; set; }
 
     }
 }
