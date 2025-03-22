@@ -38,6 +38,7 @@ namespace ProjeEkibiOneriSistemiApi.Services
                 guncellenecekOgrenci.Telefon = ogrenci.Telefon;
                 guncellenecekOgrenci.OgrenciNo = ogrenci.OgrenciNo;
                 guncellenecekOgrenci.TC = ogrenci.TC;
+                guncellenecekOgrenci.Sifre = ogrenci.Sifre;
                 guncellenecekOgrenci.OgrenciResmi = ogrenci.OgrenciResmi;
                 guncellenecekOgrenci.ToplamCevaplananSoruSayisi = ogrenci.ToplamCevaplananSoruSayisi;
                 guncellenecekOgrenci.OrtalamaPuan = ogrenci.OrtalamaPuan;

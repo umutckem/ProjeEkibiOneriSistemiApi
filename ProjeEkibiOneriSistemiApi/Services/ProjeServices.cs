@@ -37,6 +37,7 @@ namespace ProjeEkibiOneriSistemiApi.Services
                 guncellenecekProje.BitisTarihi = proje.BitisTarihi;
                 guncellenecekProje.GerekenKategoriIdler = proje.GerekenKategoriIdler;
                 guncellenecekProje.ZorlukSeviyesi = proje.ZorlukSeviyesi;
+                guncellenecekProje.Bolum = proje.Bolum;
                 await _context.SaveChangesAsync();
             }
         }
