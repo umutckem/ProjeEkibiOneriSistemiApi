@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjeEkibiOneriSistemiApi.EfCore;
 
@@ -11,9 +12,11 @@ using ProjeEkibiOneriSistemiApi.EfCore;
 namespace ProjeEkibiOneriSistemiApi.Migrations
 {
     [DbContext(typeof(OgrenciAnalizDbContext))]
-    partial class OgrenciAnalizDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250323143937_DataBaseV3.08")]
+    partial class DataBaseV308
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -193,9 +196,6 @@ namespace ProjeEkibiOneriSistemiApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ZorlukSeviyesi")
-                        .HasColumnType("int");
-
-                    b.Property<int>("projeyeKatilimSayisi")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
