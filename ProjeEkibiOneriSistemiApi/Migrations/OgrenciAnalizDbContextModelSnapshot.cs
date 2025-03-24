@@ -39,6 +39,23 @@ namespace ProjeEkibiOneriSistemiApi.Migrations
                     b.ToTable("kategoriler");
                 });
 
+            modelBuilder.Entity("ProjeEkibiOneriSistemiApi.Models.Katilimci", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OgrenciId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProjeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("katilimcilar");
+                });
+
             modelBuilder.Entity("ProjeEkibiOneriSistemiApi.Models.KullaniciYaniti", b =>
                 {
                     b.Property<int>("Id")

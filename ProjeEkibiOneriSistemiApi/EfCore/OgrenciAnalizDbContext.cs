@@ -11,6 +11,7 @@ namespace ProjeEkibiOneriSistemiApi.EfCore
         public DbSet<Kategori> kategoriler { get; set; }
         public DbSet<Proje> projeler { get; set; } // İsimlendirme düzeltildi
         public DbSet<OgrenciProje> ogrenciProjeler { get; set; } // İsimlendirme düzeltildi
+        public DbSet<Katilimci> katilimcilar { get; set; }
 
 
         public OgrenciAnalizDbContext(DbContextOptions<OgrenciAnalizDbContext> options) : base(options)

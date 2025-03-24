@@ -12,8 +12,8 @@ using ProjeEkibiOneriSistemiApi.EfCore;
 namespace ProjeEkibiOneriSistemiApi.Migrations
 {
     [DbContext(typeof(OgrenciAnalizDbContext))]
-    [Migration("20250302000050_DataBaseV3.02")]
-    partial class DataBaseV302
+    [Migration("20250324155556_DataBaseV1")]
+    partial class DataBaseV1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,23 @@ namespace ProjeEkibiOneriSistemiApi.Migrations
                     b.ToTable("kategoriler");
                 });
 
+            modelBuilder.Entity("ProjeEkibiOneriSistemiApi.Models.Katilimci", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OgrenciId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProjeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("katilimcilar");
+                });
+
             modelBuilder.Entity("ProjeEkibiOneriSistemiApi.Models.KullaniciYaniti", b =>
                 {
                     b.Property<int>("Id")
@@ -49,6 +66,9 @@ namespace ProjeEkibiOneriSistemiApi.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("KategoriId")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("OgrenciId")
                         .HasColumnType("uniqueidentifier");
@@ -74,11 +94,34 @@ namespace ProjeEkibiOneriSistemiApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AnneAdi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BabaAdi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Bolum")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OgrenciNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OgrenciResmi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("OrtalamaPuan")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Sifre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -97,17 +140,87 @@ namespace ProjeEkibiOneriSistemiApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ogrenciNo")
+                    b.Property<int>("ToplamCevaplananSoruSayisi")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ogrenciler");
+                });
+
+            modelBuilder.Entity("ProjeEkibiOneriSistemiApi.Models.OgrenciProje", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BaslangicTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("BitisTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Durum")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ogrenciResmi")
+                    b.Property<Guid>("OgrenciId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProjeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Rol")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ogrenciler");
+                    b.ToTable("ogrenciProjeler");
+                });
+
+            modelBuilder.Entity("ProjeEkibiOneriSistemiApi.Models.Proje", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Aciklama")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("AktifMi")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("BaslangicTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("BitisTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Bolum")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.PrimitiveCollection<string>("GerekenKategoriIdler")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ZorlukSeviyesi")
+                        .HasColumnType("int");
+
+                    b.Property<int>("projeyeKatilimSayisi")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("projeler");
                 });
 
             modelBuilder.Entity("ProjeEkibiOneriSistemiApi.Models.Soru", b =>
@@ -117,6 +230,10 @@ namespace ProjeEkibiOneriSistemiApi.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Cevap")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("KategoriId")
                         .HasColumnType("int");

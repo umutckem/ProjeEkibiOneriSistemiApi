@@ -25,6 +25,7 @@ namespace ProjeEkibiOneriSistemiApi
             builder.Services.AddScoped<IKullaniciYanitiServices, KullaniciYanitiServices>();
             builder.Services.AddScoped<IProjeServices, ProjeServices>();
             builder.Services.AddScoped<IOgrenciProjeServices, OgrenciProjeServices>();
+            builder.Services.AddScoped<IKatilimciServices, KatilimciServices>();
 
             // Add services to the container.
             builder.Services.AddAuthorization();
@@ -254,6 +255,35 @@ namespace ProjeEkibiOneriSistemiApi
                 await ogrenciProjeServices.silOgrenciProje(id);
                 return Results.Ok($"ID {id} olan ogrenci projesi silindi.");
             });
+            
+
+            //Katilimci App'leri
+
+            app.MapGet("/Katilimcilar", async (IKatilimciServices katilimciServices) =>
+            {
+                var Katilimcilar = await katilimciServices.GetKatilimcis();
+                return Results.Ok(Katilimcilar);
+            });
+
+            app.MapPost("/Katilimcilar", async (IKatilimciServices katilimciServices, Katilimci katilimci) =>
+            {
+                await katilimciServices.KatlilimciEkle(katilimci);
+                return Results.Created($"/Kategori/{katilimci.Id}", katilimci);
+            });
+
+            app.MapDelete("/Katilimcilar/{id}", async (IKatilimciServices katilimciServices, Guid id) =>
+            {
+                var existingOgrenciProje = await katilimciServices.GetKatilimcis();
+                if (!existingOgrenciProje.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan Katilimci Projesi bulunamadý.");
+                }
+
+                await katilimciServices.KatilimciSil(id);
+                return Results.Ok($"ID {id} olan Katilimci projesi silindi.");
+            });
+
+
             app.Run();
         }
     }
