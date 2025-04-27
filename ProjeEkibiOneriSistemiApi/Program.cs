@@ -26,6 +26,7 @@ namespace ProjeEkibiOneriSistemiApi
             builder.Services.AddScoped<IProjeServices, ProjeServices>();
             builder.Services.AddScoped<IOgrenciProjeServices, OgrenciProjeServices>();
             builder.Services.AddScoped<IKatilimciServices, KatilimciServices>();
+            builder.Services.AddScoped<IGrupServices, GrupServices>();
 
             // Add services to the container.
             builder.Services.AddAuthorization();
@@ -281,6 +282,48 @@ namespace ProjeEkibiOneriSistemiApi
 
                 await katilimciServices.KatilimciSil(id);
                 return Results.Ok($"ID {id} olan Katilimci projesi silindi.");
+            });
+
+
+
+            //Grup App'leri
+
+
+            app.MapGet("/grup", async (IGrupServices grupServices) =>
+            {
+                var gruplar = await grupServices.getGrups();
+                return Results.Ok(gruplar);
+            });
+
+            app.MapPost("/grup", async (IGrupServices grupServices, Grup grup) =>
+            {
+                await grupServices.ekleGrup(grup);
+                return Results.Created($"/Kategori/{grup.Id}", grup);
+            });
+
+            app.MapPut("/grup/{id}", async (IGrupServices grupServices, Guid id, Grup grup) =>
+            {
+                var existingGrup = await grupServices.getGrups();
+                if (!existingGrup.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan grup bulunamadý.");
+                }
+
+                grup.Id = id; // ID'nin deðiþmemesini saðla
+                await grupServices.guncelleGrup(grup);
+                return Results.Ok(grup);
+            });
+
+            app.MapDelete("/grup/{id}", async (IGrupServices grupServices, Guid id) =>
+            {
+                var existingOgrenciProje = await grupServices.getGrups();
+                if (!existingOgrenciProje.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan grup bulunamadý.");
+                }
+
+                await grupServices.silGrup(id);
+                return Results.Ok($"ID {id} olan grup silindi.");
             });
 
 
