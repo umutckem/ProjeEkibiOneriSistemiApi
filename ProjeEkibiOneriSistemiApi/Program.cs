@@ -27,6 +27,9 @@ namespace ProjeEkibiOneriSistemiApi
             builder.Services.AddScoped<IOgrenciProjeServices, OgrenciProjeServices>();
             builder.Services.AddScoped<IKatilimciServices, KatilimciServices>();
             builder.Services.AddScoped<IGrupServices, GrupServices>();
+            builder.Services.AddScoped<IDestekServices, DestekServices>();
+            builder.Services.AddScoped<IRolServices, RolServices>();
+            builder.Services.AddScoped<IYetkiServices, YetkiServices>();
 
             // Add services to the container.
             builder.Services.AddAuthorization();
@@ -326,6 +329,97 @@ namespace ProjeEkibiOneriSistemiApi
                 return Results.Ok($"ID {id} olan grup silindi.");
             });
 
+            //Destek App'leri
+
+            app.MapGet("/Destek", async (IDestekServices destekServices) =>
+            {
+                var Destekler = await destekServices.GetAllDestek();
+                return Results.Ok(Destekler);
+            });
+
+            app.MapPost("/Destek", async (IDestekServices destekServices, Destek destek) =>
+            {
+                await destekServices.ekleDestek(destek);
+                return Results.Created($"/Kategori/{destek.Id}", destek);
+            });
+
+            app.MapDelete("/Destek/{id}", async (IDestekServices destekServices, int id) =>
+            {
+                var existingDestek = await destekServices.GetAllDestek();
+                if (!existingDestek.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan destek bulunamadý.");
+                }
+
+                await destekServices.silDestek(id);
+                return Results.Ok($"ID {id} olan destek silindi.");
+            });
+
+            //Rol App'leri
+
+            app.MapGet("/Rol", async (IRolServices rolServices) =>
+            {
+                var Roller = await rolServices.GetAllRol();
+                return Results.Ok(Roller);
+            });
+
+            app.MapPost("/Rol", async (IRolServices rolServices, Rol rol) =>
+            {
+                await rolServices.ekleRol(rol);
+                return Results.Created($"/Kategori/{rol.Id}", rol);
+            });
+
+            app.MapDelete("/Rol/{id}", async (IRolServices rolServices, Guid id) =>
+            {
+                var existingRol = await rolServices.GetAllRol();
+                if (!existingRol.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan rol bulunamadý.");
+                }
+
+                await rolServices.silRol(id);
+                return Results.Ok($"ID {id} olan rol silindi.");
+            });
+
+            //Yetki App'leri
+
+
+            app.MapGet("/Yetki", async (IYetkiServices yetkiServices) =>
+            {
+                var yetkiler = await yetkiServices.GetYetkis();
+                return Results.Ok(yetkiler);
+            });
+
+            app.MapPost("/Yetki", async (IYetkiServices yetkiServices, Yetki yetki) =>
+            {
+                await yetkiServices.ekleYetki(yetki);
+                return Results.Created($"/Kategori/{yetki.Id}", yetki);
+            });
+
+            app.MapPut("/Yetki/{id}", async (IYetkiServices yetkiServices, Guid id, Yetki yetki) =>
+            {
+                var existingYetkiler = await yetkiServices.GetYetkis();
+                if (!existingYetkiler.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan yetki bulunamadý.");
+                }
+
+                yetki.Id = id; // ID'nin deðiþmemesini saðla
+                await yetkiServices.guncelleYetki(yetki);
+                return Results.Ok(yetki);
+            });
+
+            app.MapDelete("/Yetki/{id}", async (IYetkiServices yetkiServices, Guid id) =>
+            {
+                var existingYetkiler = await yetkiServices.GetYetkis();
+                if (!existingYetkiler.Any(o => o.Id == id))
+                {
+                    return Results.NotFound($"ID {id} olan yetki bulunamadý.");
+                }
+
+                await yetkiServices.silYetki(id);
+                return Results.Ok($"ID {id} olan yetki silindi.");
+            });
 
             app.Run();
         }
