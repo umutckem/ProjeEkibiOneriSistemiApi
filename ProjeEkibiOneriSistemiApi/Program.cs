@@ -195,7 +195,7 @@ namespace ProjeEkibiOneriSistemiApi
                 return Results.Created($"/Kategori/{proje.Id}", proje);
             });
 
-            app.MapPut("/Proje/{id}", async (IProjeServices projeServices, Guid id, Proje proje) =>
+            app.MapPut("/Projeler/{id}", async (IProjeServices projeServices, Guid id, Proje proje) =>
             {
                 var existingProje = await projeServices.GetProjeler();
                 if (!existingProje.Any(o => o.Id == id))
