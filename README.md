@@ -2,19 +2,11 @@
 
 
 📌 Proje Açıklaması
-ProjeEkibiÖneriSistemiApi, ProjeEkibiÖneriSistemi'nin çalışmasını sağlayan bir API'dir. Öğrenci profillerini veri odaklı analiz ederek en uygun ve dinamik proje ekiplerini önerir.
+ProjeEkibiÖneriSistemiApi, ProjeEkibiÖneriSistemi'nin çalışmasını sağlayan bir API'dir.
 Bu API, ASP.NET Core kullanılarak geliştirilmiştir.
 
+![image](https://github.com/user-attachments/assets/d98bddd7-640f-4046-b54f-378ce415eae9)
 
-🚀 Özellikler
-
-Öğrenci profillerini analiz eder ve yetkinlik seviyelerini değerlendirir.
-
-Dinamik ve optimum proje ekipleri önerir.
-
-RESTful API ile modern ve esnek bir yapı sunar.
-
-Veritabanı bağlantısı ve öğrenci verisi işleme işlemlerini içerir.
 
 🛠 Teknolojiler
 
