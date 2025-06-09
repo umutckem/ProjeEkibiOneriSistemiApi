@@ -5,6 +5,8 @@
 ProjeEkibiÖneriSistemiApi, ProjeEkibiÖneriSistemi'nin çalışmasını sağlayan bir API'dir.
 Bu API, ASP.NET Core kullanılarak geliştirilmiştir.
 
+# Swagger Ekranı
+
 ![image](https://github.com/user-attachments/assets/d98bddd7-640f-4046-b54f-378ce415eae9)
 
 
