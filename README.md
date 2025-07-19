@@ -21,7 +21,7 @@ Aşağıdaki gibi DefaultConnection bağlantı cümlesini düzenleyin:
   "DefaultConnection": "Server=.;Database=ProjeEkibiOneriDb;Trusted_Connection=True;TrustServerCertificate=True;"
 }
 
-SQL Server Kimlik Doğrulama:
+- SQL Server Kimlik Doğrulama:
 
 "ConnectionStrings": {
   "DefaultConnection": "Server=.;Database=ProjeEkibiOneriDb;User Id=KULLANICI_ADI;Password=ŞİFRE;TrustServerCertificate=True;"
@@ -30,7 +30,7 @@ SQL Server Kimlik Doğrulama:
 ## 🗄️ Veritabanı Migrasyonları
 
 - Add-Migration IlkOlusturma
-- 
+
 - Update-Database
 
 ## ⚙️ Geliştirme Ortamı
